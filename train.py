@@ -12,7 +12,7 @@ weight_path = 'params/unet.pth'
 data_path = r'C:/Users/gengxh/datasets/VOC/images/VOCdevkit/VOC2007'
 save_path = 'train_image'
 if __name__ == '__main__':
-    data_loader = DataLoader(MyDataset(data_path), batch_size=2, shuffle=True)
+    data_loader = DataLoader(MyDataset(data_path), batch_size=3, shuffle=True)
     net = UNet().to(device)
     if os.path.exists(weight_path):
         net.load_state_dict(torch.load(weight_path))
@@ -25,8 +25,9 @@ if __name__ == '__main__':
 
     epoch = 1
     while True:
-        for i, (image, segment_image) in enumerate(data_loader):
-            image, segment_image = image.to(device), segment_image.to(device)
+        # aa = enumerate(data_loader)
+        for i, (image2, segment_image) in enumerate(data_loader):
+            image, segment_image = image2.to(device), segment_image.to(device)
 
             out_image = net(image)
             train_loss = loss_fun(out_image, segment_image)
